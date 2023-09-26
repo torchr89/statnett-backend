@@ -13,6 +13,7 @@ val logstashEncoderVersion = "7.0.1"
 
 plugins {
     kotlin("jvm") version "1.9.10"
+    kotlin("plugin.serialization") version "1.9.0"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.9.10"
     id("com.github.johnrengelman.shadow") version "7.1.0"
 }
@@ -33,10 +34,11 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-xml:$ktorVersion")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
 
-    // JSON parsing
+    // JSON/XML parsing
     implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonDatabindVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jacksonVersion")
 
     // Logging
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
