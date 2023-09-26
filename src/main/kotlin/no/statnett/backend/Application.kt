@@ -7,6 +7,7 @@ import io.ktor.server.application.Application
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.routing.*
 import no.statnett.backend.api.registerMetApi
 import no.statnett.backend.api.registerEarthquakeApi
@@ -39,4 +40,7 @@ fun Application.serverModule(httpClient: HttpClient) {
         registerMetApi(httpClient)
     }
 
+    install(CORS) {
+        allowHost("localhost:5173", schemes = listOf("http"))
+    }
 }
