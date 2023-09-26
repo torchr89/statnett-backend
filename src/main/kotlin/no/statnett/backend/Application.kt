@@ -41,6 +41,7 @@ fun Application.serverModule(httpClient: HttpClient) {
     }
 
     install(CORS) {
-        allowHost("localhost:5173", schemes = listOf("http"))
+        allowHost("localhost:8081", schemes = listOf("http"))
+        allowHost("127.0.0.1:8081", schemes = listOf("http"))
     }
 }
