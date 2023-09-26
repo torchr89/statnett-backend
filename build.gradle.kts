@@ -7,6 +7,8 @@ version = "1.0"
 val ktorVersion = "2.3.4"
 val jacksonVersion = "2.13.2"
 val jacksonDatabindVersion = "2.13.4.1"
+val logbackVersion = "1.2.9"
+val logstashEncoderVersion = "7.0.1"
 
 
 plugins {
@@ -36,6 +38,9 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
 
+    // Logging
+    implementation("ch.qos.logback:logback-classic:$logbackVersion")
+    implementation("net.logstash.logback:logstash-logback-encoder:$logstashEncoderVersion")
 }
 
 repositories {
