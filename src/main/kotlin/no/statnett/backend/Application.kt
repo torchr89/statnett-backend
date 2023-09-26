@@ -1,17 +1,19 @@
 package no.statnett.backend
 
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import io.ktor.serialization.jackson.*
+import io.ktor.client.*
+import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.application.Application
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.routing.*
+import no.statnett.backend.api.registerMetApi
+import no.statnett.backend.api.registerEarthquakeApi
+import no.statnett.backend.client.httpClient
 
 fun main() {
+    val httpClient = httpClient()
     val server = embeddedServer(
         Netty,
         applicationEngineEnvironment {
@@ -20,20 +22,21 @@ fun main() {
             }
 
             module {
-                serverModule()
+                serverModule(httpClient)
             }
         }
     )
     server.start(wait = true)
 }
 
-fun Application.serverModule() {
+fun Application.serverModule(httpClient: HttpClient) {
     install(ContentNegotiation) {
-        jackson {
-            registerKotlinModule()
-            registerModule(JavaTimeModule())
-            configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-            configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        }
+        json()
     }
+
+    install(Routing) {
+        registerEarthquakeApi(httpClient)
+        registerMetApi(httpClient)
+    }
+
 }
