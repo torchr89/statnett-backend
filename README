@@ -1,6 +1,0 @@
-# statnett-backend
-A Ktor web-server written in Kotlin providing an API-proxy
-to weather and earthquake data.
-
-### Building the application
-Run `./gradlew build`
