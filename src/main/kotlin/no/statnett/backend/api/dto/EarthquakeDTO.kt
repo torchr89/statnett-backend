@@ -11,5 +11,6 @@ data class FeatureDTO(
 @Serializable
 data class EarthquakeDTO (
         val features: List<FeatureDTO>,
+        val title: String,
         val nrFeatures: Int,
 )

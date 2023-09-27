@@ -10,12 +10,17 @@ import java.time.ZoneId
 data class Property(
     val title: String,
     val type: String,
-    val mag: Float,
+    val mag: Float?,
+    val sig: Int?,
+    val gap: Int?,
     val place: String,
     val time: Long,
 ) {
     override fun toString() =
-            "${time.toLocalDateTime()}: $title | $type | $mag | $place"
+            "${time.toLocalDateTime()}: " +
+                    " $title | $type |" +
+                    " ${mag ?: "<N/A>"} | ${sig ?: "<N/A>"} | ${gap ?: "<N/A>"}" +
+                    " | $place"
 }
 
 @Serializable
@@ -25,8 +30,14 @@ data class Feature(
 )
 
 @Serializable
+data class Metadata(
+        val title: String
+)
+
+@Serializable
 data class EarthquakeData (
-        val features: List<Feature>
+        val features: List<Feature>,
+        val metadata: Metadata,
 )
 
 fun Long.toLocalDateTime() = Instant
@@ -41,5 +52,6 @@ fun EarthquakeData.toDTO() = EarthquakeDTO(
                     "${it.properties}"
             )
         },
-        nrFeatures = this.features.size
+        title = this.metadata.title,
+        nrFeatures = this.features.size,
 )
