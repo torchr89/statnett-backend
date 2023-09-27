@@ -12,4 +12,5 @@ data class ItemDTO(
 data class MetDTO(
         val description: String,
         val items: List<ItemDTO>,
+        val nrItems: Int,
 )

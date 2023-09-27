@@ -15,7 +15,7 @@ data class Property(
     val time: Long,
 ) {
     override fun toString() =
-            "$title | $type | $mag | $place | ${time.toLocalDateTime()} "
+            "${time.toLocalDateTime()}: $title | $type | $mag | $place"
 }
 
 @Serializable
@@ -35,10 +35,11 @@ fun Long.toLocalDateTime() = Instant
         .toLocalDateTime()
 
 fun EarthquakeData.toDTO() = EarthquakeDTO(
-        this.features.map {
+        features = this.features.map {
             FeatureDTO(
                     it.type,
                     "${it.properties}"
             )
-        }
+        },
+        nrFeatures = this.features.size
 )

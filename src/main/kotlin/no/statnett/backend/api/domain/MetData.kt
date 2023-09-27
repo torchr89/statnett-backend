@@ -30,5 +30,6 @@ fun MetData.toDTO() =
                             title = it.title,
                             description = it.description,
                     )
-                }
+                },
+                nrItems = this.channel.item.size
         )
